@@ -1,0 +1,35 @@
+location: {{ .Env.AZURE_LOCATION }}
+identity:
+  type: UserAssigned
+  userAssignedIdentities:
+    ? "{{ .Env.AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID }}"
+    : {}
+properties:
+  environmentId: {{ .Env.AZURE_CONTAINER_APPS_ENVIRONMENT_ID }}
+  configuration:
+    activeRevisionsMode: single
+    registries:
+    - server: {{ .Env.AZURE_CONTAINER_REGISTRY_ENDPOINT }}
+      identity: {{ .Env.AZURE_CONTAINER_REGISTRY_MANAGED_IDENTITY_ID }}
+  template:
+    containers:
+    - image: {{ .Env.SERVICE_WORKER_IMAGE_NAME }}
+      name: worker
+      env:
+      - name: AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE
+        value: "true"
+      - name: Aspire__Azure__Messaging__ServiceBus__Tracing
+        value: "true"
+      - name: ConnectionStrings__bus
+        value: {{ urlHost .Env.SERVICE_BINDING_BUS_ENDPOINT }}
+      - name: AZURE_CLIENT_ID
+        value: {{ .Env.AZURE_CLIENT_ID }}
+      - name: OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES
+        value: "true"
+      - name: OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES
+        value: "true"
+      - name: queueName
+        value: "myqueue"
+tags:
+  azd-service-name: worker
+  aspire-resource-name: worker

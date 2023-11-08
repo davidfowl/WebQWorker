@@ -1,0 +1,58 @@
+{
+  "resources": {
+    "bus": {
+      "type": "azure.servicebus.v0",
+      "queues": [
+        "myqueue"
+      ]
+    },
+    "web": {
+      "type": "project.v0",
+      "path": "..\\Web\\Web.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "queueName": "myqueue",
+        "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE": "true",
+        "Aspire__Azure__Messaging__ServiceBus__Tracing": "true",
+        "ConnectionStrings__bus": "{bus.connectionString}"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http"
+        },
+        "https": {
+          "scheme": "https",
+          "protocol": "tcp",
+          "transport": "http"
+        }
+      }
+    },
+    "worker": {
+      "type": "project.v0",
+      "path": "..\\Worker\\Worker.csproj",
+      "env": {
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "queueName": "myqueue",
+        "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE": "true",
+        "Aspire__Azure__Messaging__ServiceBus__Tracing": "true",
+        "ConnectionStrings__bus": "{bus.connectionString}"
+      },
+      "bindings": {
+        "http": {
+          "scheme": "http",
+          "protocol": "tcp",
+          "transport": "http"
+        },
+        "https": {
+          "scheme": "https",
+          "protocol": "tcp",
+          "transport": "http"
+        }
+      }
+    }
+  }
+}
