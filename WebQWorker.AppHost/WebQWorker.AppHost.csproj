@@ -15,9 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WebApplication1\WebApplication1.csproj" />
     <ProjectReference Include="..\Web\Web.csproj" />
-    <ProjectReference Include="..\WorkerService1\WorkerService1.csproj" />
     <ProjectReference Include="..\Worker\Worker.csproj" />
   </ItemGroup>
 
