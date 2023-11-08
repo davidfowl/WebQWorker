@@ -1,0 +1,9 @@
+@HostAddress = http://localhost:5200
+
+POST {{HostAddress}}/message
+Content-Type: application/json
+traceparent: {{$randomInt}}
+
+{
+  "message": "Hello {{$randomInt}}"
+}

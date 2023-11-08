@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsAspireHost>true</IsAspireHost>
+    <UserSecretsId>bf225f32-7f74-44b7-bf7b-db39c11b9de6</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+	  <PackageReference Include="Aspire.Hosting" Version="8.0.0-preview.1.23552.8" />
+	  <PackageReference Include="Aspire.Hosting.Azure.Provisioning" Version="8.0.0-preview.1.23552.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebApplication1\WebApplication1.csproj" />
+    <ProjectReference Include="..\Web\Web.csproj" />
+    <ProjectReference Include="..\WorkerService1\WorkerService1.csproj" />
+    <ProjectReference Include="..\Worker\Worker.csproj" />
+  </ItemGroup>
+
+</Project>
