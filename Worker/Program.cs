@@ -21,6 +21,6 @@ app.UseStaticFiles();
 
 app.MapDefaultEndpoints();
 
-app.MapRazorComponents<App>().DisableAntiforgery();
+app.MapRazorComponents<App>();
 
 app.Run();

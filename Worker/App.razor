@@ -1,4 +1,7 @@
-﻿@page "/"
+﻿@using Microsoft.AspNetCore.Antiforgery
+
+@page "/"
+@attribute [RequireAntiforgeryToken(false)]
 
 <!DOCTYPE html>
 <html lang="en">
