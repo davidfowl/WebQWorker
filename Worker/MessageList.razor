@@ -5,7 +5,7 @@
 
 <h2>Messages</h2>
 
-    @if (messages is null)
+@if (messages is null)
 {
     <p>Loading...</p>
 }
@@ -34,7 +34,7 @@ else
 
             messages.Add(message);
 
-            StateHasChanged();
+            await InvokeAsync(StateHasChanged);
         }
     }
 }
