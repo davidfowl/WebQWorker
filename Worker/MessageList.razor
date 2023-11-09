@@ -30,7 +30,7 @@ else
 
             messages.Add(message);
 
-            await InvokeAsync(StateHasChanged);
+            StateHasChanged();
         }
     }
 }
