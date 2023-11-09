@@ -5,5 +5,5 @@ Content-Type: application/json
 traceparent: {{$randomInt}}
 
 {
-  "message": "Hello {{$randomInt}}"
+  "message": "Hello there {{$randomInt}}"
 }

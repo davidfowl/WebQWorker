@@ -7,18 +7,14 @@
 
 @if (messages is null)
 {
-    <p>Loading...</p>
-}
-else if (messages.Count == 0)
-{
-    <p>No messages</p>
+    <p>Waiting for messages...</p>
 }
 else
 {
     <ul>
         @foreach (var message in messages)
         {
-            <li>@message</li>
+            <li><pre>@message</pre></li>
         }
     </ul>
 }
