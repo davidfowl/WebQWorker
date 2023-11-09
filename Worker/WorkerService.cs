@@ -1,8 +1,11 @@
+using System.Threading.Channels;
 using Azure.Messaging.ServiceBus;
 
-namespace WorkerService1;
-
-public class Worker(ILogger<Worker> logger, IConfiguration configuration, ServiceBusClient client) : BackgroundService
+public class WorkerService(
+    ILogger<WorkerService> logger, 
+    IConfiguration configuration, 
+    ServiceBusClient client, 
+    ChannelWriter<string> messageWriter) : BackgroundService
 {
     private ServiceBusProcessor? _processor;
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -19,11 +22,11 @@ public class Worker(ILogger<Worker> logger, IConfiguration configuration, Servic
             return Task.CompletedTask;
         };
 
-        _processor.ProcessMessageAsync += (args) =>
+        _processor.ProcessMessageAsync += async (args) =>
         {
             logger.LogInformation("Received message: {Message}", args.Message.Body);
 
-            return Task.CompletedTask;
+            await messageWriter.WriteAsync(args.Message.Body.ToString());
         };
 
         await _processor.StartProcessingAsync(stoppingToken);

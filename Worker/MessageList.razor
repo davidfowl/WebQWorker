@@ -1,0 +1,40 @@
+﻿@using System.Threading.Channels
+
+@inject ChannelReader<string> MessageReader
+@attribute [StreamRendering]
+
+<h2>Messages</h2>
+
+    @if (messages is null)
+{
+    <p>Loading...</p>
+}
+else if (messages.Count == 0)
+{
+    <p>No messages</p>
+}
+else
+{
+    <ul>
+        @foreach (var message in messages)
+        {
+            <li>@message</li>
+        }
+    </ul>
+}
+
+@code {
+    List<string>? messages;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await foreach (var message in MessageReader.ReadAllAsync())
+        {
+            messages ??= [];
+
+            messages.Add(message);
+
+            StateHasChanged();
+        }
+    }
+}
