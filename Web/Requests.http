@@ -1,4 +1,4 @@
-@HostAddress = http://localhost:5200
+@HostAddress = https://web.nicesky-8f45a90c.westus2.azurecontainerapps.io
 
 POST {{HostAddress}}/message
 Content-Type: application/json
