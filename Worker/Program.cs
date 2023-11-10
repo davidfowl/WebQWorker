@@ -6,7 +6,8 @@ builder.AddAzureServiceBus("bus");
 
 builder.AddServiceDefaults();
 
-builder.Services.AddRazorComponents();
+builder.Services.AddRazorComponents()
+        .AddInteractiveServerComponents();
 
 builder.Services.AddHostedService<WorkerService>();
 
@@ -18,6 +19,7 @@ app.UseStaticFiles();
 
 app.MapDefaultEndpoints();
 
-app.MapRazorComponents<App>();
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
 
 app.Run();

@@ -3,7 +3,7 @@
 
 @implements IDisposable
 @inject MessageListener MessageReader
-@attribute [StreamRendering]
+@rendermode RenderMode.InteractiveServer
 
 <h2>Messages</h2>
 
@@ -16,7 +16,9 @@ else
     <ul>
         @foreach (var message in messages)
         {
-            <li><pre>@message</pre></li>
+            <li>
+                <pre>@message</pre>
+            </li>
         }
     </ul>
 }
@@ -25,21 +27,21 @@ else
     List<string>? messages;
     Channel<string> channel = Channel.CreateUnbounded<string>();
 
-    [CascadingParameter]
-    public HttpContext HttpContext { get; set; } = default!;
-
     protected override async Task OnInitializedAsync()
     {
         await MessageReader.SubscribeAsync(channel);
 
-        await foreach (var message in channel.Reader.ReadAllAsync(HttpContext.RequestAborted))
+        _ = Task.Run(async () =>
         {
-            messages ??= [];
+            await foreach (var message in channel.Reader.ReadAllAsync())
+            {
+                messages ??= [];
 
-            messages.Add(message);
+                messages.Add(message);
 
-            StateHasChanged();
-        }
+                await InvokeAsync(StateHasChanged);
+            }
+        });
     }
 
     public void Dispose()
