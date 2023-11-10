@@ -7,13 +7,12 @@ builder.AddAzureServiceBus("bus");
 
 builder.AddServiceDefaults();
 
-builder.Services.AddRazorComponents();
+builder.Services.AddRazorComponents()
+    .AddInteractiveServerComponents();
 
 builder.Services.AddHostedService<WorkerService>();
 
-var channel = Channel.CreateUnbounded<string>();
-builder.Services.AddSingleton(channel.Reader);
-builder.Services.AddSingleton(channel.Writer);
+builder.Services.AddSingleton<MessageListener>();
 
 var app = builder.Build();
 
@@ -21,6 +20,7 @@ app.UseStaticFiles();
 
 app.MapDefaultEndpoints();
 
-app.MapRazorComponents<App>();
+app.MapRazorComponents<App>()
+    .AddInteractiveServerRenderMode();
 
 app.Run();

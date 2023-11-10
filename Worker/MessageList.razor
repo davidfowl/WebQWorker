@@ -1,7 +1,9 @@
 ﻿@using System.Threading.Channels
+@using Microsoft.AspNetCore.Components.Web
 
-@inject ChannelReader<string> MessageReader
-@attribute [StreamRendering]
+@implements IDisposable
+@inject MessageListener MessageReader
+@rendermode RenderMode.InteractiveServer
 
 <h2>Messages</h2>
 
@@ -21,16 +23,22 @@ else
 
 @code {
     List<string>? messages;
+    IDisposable? subscription;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        await foreach (var message in MessageReader.ReadAllAsync())
+        subscription = MessageReader.Subscribe(async message =>
         {
             messages ??= [];
 
             messages.Add(message);
 
-            StateHasChanged();
-        }
+            await InvokeAsync(StateHasChanged);
+        });
+    }
+
+    public void Dispose()
+    {
+        subscription?.Dispose();
     }
 }
