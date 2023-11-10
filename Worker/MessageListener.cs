@@ -1,31 +1,61 @@
-﻿namespace Worker;
+﻿using System.Threading.Channels;
+
+namespace Worker;
 
 public class MessageListener(ILogger<MessageListener> logger)
 {
-    private Func<string, Task>? _onMessage;
+    private readonly List<ChannelWriter<string>> _subscribers = [];
+    private readonly SemaphoreSlim _lock = new(1);
 
-    public IDisposable Subscribe(Func<string, Task> onMessage)
+    public async Task SubscribeAsync(Channel<string> channel)
     {
         logger.LogInformation("Subscribing to messages");
 
-        _onMessage += onMessage;
-
-        return new DisposableAction(() =>
+        await _lock.WaitAsync();
+        try
         {
-            logger.LogInformation("Unsubscribing from messages");
-
-            _onMessage -= onMessage;
-        });
-    }
-
-    public Task WriteMessageAsync(string message)
-    {
-        if (_onMessage is { } m)
+            _subscribers.Add(channel.Writer);
+        }
+        finally
         {
-            return m(message);
+            _lock.Release();
         }
 
-        return Task.CompletedTask;
+        async Task WaitForCompletion()
+        {
+            await channel.Reader.Completion;
+
+            logger.LogInformation("Unsubscribing from messages");
+
+            await _lock.WaitAsync();
+            try
+            {
+                _subscribers.Remove(channel.Writer);
+            }
+            finally
+            {
+                _lock.Release();
+            }
+        }
+
+        // When the channel closes, remove it from the list of subscriptions
+        _ = WaitForCompletion();
+    }
+
+    public async Task WriteMessageAsync(string message)
+    {
+        await _lock.WaitAsync();
+        try
+        {
+            foreach (var w in _subscribers)
+            {
+                await w.WriteAsync(message);
+            }
+        }
+        finally
+        {
+            _lock.Release();
+        }
     }
 
     private class DisposableAction(Action a) : IDisposable

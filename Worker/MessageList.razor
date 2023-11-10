@@ -23,14 +23,16 @@ else
 
 @code {
     List<string>? messages;
-    IDisposable? subscription;
     Channel<string> channel = Channel.CreateUnbounded<string>();
+
+    [CascadingParameter]
+    public HttpContext HttpContext { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {
-        subscription = MessageReader.Subscribe(message => channel.Writer.WriteAsync(message).AsTask());
+        await MessageReader.SubscribeAsync(channel);
 
-        await foreach (var message in channel.Reader.ReadAllAsync())
+        await foreach (var message in channel.Reader.ReadAllAsync(HttpContext.RequestAborted))
         {
             messages ??= [];
 
@@ -42,7 +44,6 @@ else
 
     public void Dispose()
     {
-        subscription?.Dispose();
         channel.Writer.TryComplete();
     }
 }
