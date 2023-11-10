@@ -1,4 +1,3 @@
-using System.Threading.Channels;
 using Worker;
 
 var builder = WebApplication.CreateSlimBuilder(args);
@@ -7,8 +6,7 @@ builder.AddAzureServiceBus("bus");
 
 builder.AddServiceDefaults();
 
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+builder.Services.AddRazorComponents();
 
 builder.Services.AddHostedService<WorkerService>();
 
@@ -20,7 +18,6 @@ app.UseStaticFiles();
 
 app.MapDefaultEndpoints();
 
-app.MapRazorComponents<App>()
-    .AddInteractiveServerRenderMode();
+app.MapRazorComponents<App>();
 
 app.Run();

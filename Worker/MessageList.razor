@@ -3,7 +3,7 @@
 
 @implements IDisposable
 @inject MessageListener MessageReader
-@rendermode RenderMode.InteractiveServer
+@attribute [StreamRendering]
 
 <h2>Messages</h2>
 
@@ -24,21 +24,25 @@ else
 @code {
     List<string>? messages;
     IDisposable? subscription;
+    Channel<string> channel = Channel.CreateUnbounded<string>();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        subscription = MessageReader.Subscribe(async message =>
+        subscription = MessageReader.Subscribe(message => channel.Writer.WriteAsync(message).AsTask());
+
+        await foreach (var message in channel.Reader.ReadAllAsync())
         {
             messages ??= [];
 
             messages.Add(message);
 
-            await InvokeAsync(StateHasChanged);
-        });
+            StateHasChanged();
+        }
     }
 
     public void Dispose()
     {
         subscription?.Dispose();
+        channel.Writer.TryComplete();
     }
 }
