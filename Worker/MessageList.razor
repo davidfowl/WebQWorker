@@ -35,11 +35,14 @@ else
         {
             await foreach (var message in channel.Reader.ReadAllAsync())
             {
-                messages ??= [];
+                await InvokeAsync(() =>
+                {
+                    messages ??= [];
 
-                messages.Add(message);
+                    messages.Add(message);
 
-                await InvokeAsync(StateHasChanged);
+                    StateHasChanged();
+                });
             }
         });
     }
