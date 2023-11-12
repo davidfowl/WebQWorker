@@ -38,7 +38,7 @@ public class MessageListener(ILogger<MessageListener> logger)
             }
         }
 
-        // When the channel closes, remove it from the list of subscriptions
+        // When the channel closes, remove it from the list of subscribers
         _ = WaitForCompletion();
     }
 
@@ -55,16 +55,6 @@ public class MessageListener(ILogger<MessageListener> logger)
         finally
         {
             _lock.Release();
-        }
-    }
-
-    private class DisposableAction(Action a) : IDisposable
-    {
-        private Action? _action = a;
-
-        public void Dispose()
-        {
-            Interlocked.Exchange(ref _action, null)?.Invoke();
         }
     }
 }
