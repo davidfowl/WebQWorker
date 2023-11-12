@@ -1,10 +1,9 @@
-using Azure.Messaging.ServiceBus;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
 builder.AddAzureServiceBus("bus");
+builder.Services.AddSingleton<MessageSender>();
 
 var app = builder.Build();
 
@@ -12,11 +11,11 @@ app.MapDefaultEndpoints();
 
 var queueName = builder.Configuration["queueName"];
 
-app.MapPost("/message", async (ServiceBusClient client, Stream body) =>
+app.MapPost("/message", async (MessageSender sender, Stream body) =>
 {
-    var message = new ServiceBusMessage(await BinaryData.FromStreamAsync(body));
+    var payload = await BinaryData.FromStreamAsync(body);
 
-    await client.CreateSender(queueName).SendMessageAsync(message);
+    await sender.SendMessageAsync(payload);
 
     return Results.Accepted();
 });

@@ -1,4 +1,3 @@
-using System.Threading.Channels;
 using Azure.Messaging.ServiceBus;
 
 namespace Worker;
