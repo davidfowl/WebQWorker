@@ -10,12 +10,8 @@ internal class MessageSender(ServiceBusClient client, IConfiguration config) : I
 {
     private readonly ServiceBusSender _sender = client.CreateSender(config["queueName"] ?? throw new InvalidOperationException("queueName is required"));
 
-    public async Task SendMessageAsync(BinaryData payload)
-    {
-        var message = new ServiceBusMessage(payload);
-
-        await _sender.SendMessageAsync(message);
-    }
+    public Task SendMessageAsync(BinaryData payload) => 
+        _sender.SendMessageAsync(new ServiceBusMessage(payload));
 
     public ValueTask DisposeAsync() =>
         _sender.DisposeAsync();

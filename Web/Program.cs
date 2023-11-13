@@ -9,8 +9,6 @@ var app = builder.Build();
 
 app.MapDefaultEndpoints();
 
-var queueName = builder.Configuration["queueName"];
-
 app.MapPost("/message", async (MessageSender sender, Stream body) =>
 {
     var payload = await BinaryData.FromStreamAsync(body);
