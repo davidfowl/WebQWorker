@@ -22,4 +22,4 @@ Replace \<subscriptionId\> and \<location\> with appropriate values. Locations v
 
 ## Deployment
 
-This example is can be deployed to Azure Container Apps using a [preview version of the Azure Developer CLI](#).
+This example is can be deployed to Azure Container Apps using the [Azure Developer CLI](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/install-azd).
