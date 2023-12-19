@@ -17,6 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Web\Web.csproj" />
     <ProjectReference Include="..\Worker\Worker.csproj" />
+    <ProjectReference Include="..\WorkerNoUI\WorkerNoUI.csproj" />
   </ItemGroup>
 
 </Project>
