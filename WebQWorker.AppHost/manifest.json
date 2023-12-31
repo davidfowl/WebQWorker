@@ -8,7 +8,7 @@
     },
     "web": {
       "type": "project.v0",
-      "path": "..\\Web\\Web.csproj",
+      "path": "../Web/Web.csproj",
       "env": {
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
@@ -32,7 +32,7 @@
     },
     "worker": {
       "type": "project.v0",
-      "path": "..\\Worker\\Worker.csproj",
+      "path": "../Worker/Worker.csproj",
       "env": {
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",

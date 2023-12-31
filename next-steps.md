@@ -24,7 +24,31 @@ To troubleshoot any issues, see [troubleshooting](#troubleshooting).
 
 ## What was added
 
-Coming Soon!
+### Infrastructure configuration
+
+To describe the infrastructure and application and `azure.yaml` was added with the following directory structure:
+
+```yaml
+- azure.yaml     # azd project configuration
+```
+
+This file contains a single service, which references your project's App Host. When needed, `azd` generates the required infrastructure as code in memory and uses it.
+
+If you would like to see or modify the infrastructure that `azd` uses, run `azd infra synth` to persist it to disk.
+
+If you do this, some additional directories will be created:
+
+```yaml
+- infra/            # Infrastructure as Code (bicep) files
+  - main.bicep      # main deployment module
+  - resources.bicep # resources shared across your application's services
+```
+
+In addition, for each project resource referenced by your app host, a `containerApp.tmpl.yaml` file will be created in a directory named `manifests` next the project file. This file contains the infrastructure as code for running the project on Azure Container Apps.
+
+*Note*: Once you have synthesized your infrastructure to disk, changes made to your App Host will not be reflected in the infrastructure. You can re-generate the infrastructure by running `azd infra synth` again. It will prompt you before overwriting files. You can pass `--force` to force `azd infra synth` to overwrite the files without prompting.
+
+*Note*: `azd infra synth` is currently an alpha feature and must be explicitly enabled by running `azd config set alpha.infraSynth on`. You only need to do this once.
 
 ## Billing
 
@@ -40,9 +64,6 @@ A: Your service may have failed to start or misconfigured. To investigate furthe
 2. Navigate to the specific Azure Container App resource for the service.
 3. Select *Monitoring -> Log stream* under the navigation pane.
 4. Observe the log output to identify any errors.
-5. If there are no errors, ensure that the ingress target port matches the port that your service listens on:
-    1. Under *Settings -> Ingress*, ensure the *Target port* matches the desired port.
-    2. After modifying this setting, also update the `targetPort` setting in the .bicep file for the service under `infra/app`.
-6. If logs are written to disk, examine the local logs or debug the application by using the *Console* to connect to a shell within the running container.
+5. If logs are written to disk, examine the local logs or debug the application by using the *Console* to connect to a shell within the running container.
 
 For additional information about setting up your `azd` project, visit our official [docs](https://learn.microsoft.com/en-us/azure/developer/azure-developer-cli/make-azd-compatible?pivots=azd-convert).

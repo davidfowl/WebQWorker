@@ -10,13 +10,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-	  <PackageReference Include="Aspire.Hosting" Version="8.0.0-preview.1.23552.8" />
-	  <PackageReference Include="Aspire.Hosting.Azure.Provisioning" Version="8.0.0-preview.1.23552.8" />
+	  <PackageReference Include="Aspire.Hosting" Version="8.0.0-preview.2.23618.4" />
+	  <PackageReference Include="Aspire.Hosting.Azure.Provisioning" Version="8.0.0-preview.2.23618.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Web\Web.csproj" />
     <ProjectReference Include="..\Worker\Worker.csproj" />
+    <ProjectReference Include="..\WorkerNoUI\WorkerNoUI.csproj" />
   </ItemGroup>
 
 </Project>

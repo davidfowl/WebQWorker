@@ -11,7 +11,7 @@ builder.AddProject<Projects.Web>("web")
     .UseAzureTracing()
     .WithReference(bus);
 
-builder.AddProject<Projects.Worker>("worker")
+builder.AddProject<Projects.WorkerNoUI>("worker")
     .WithEnvironment("queueName", queueName)
     .UseAzureTracing()
     .WithReference(bus);

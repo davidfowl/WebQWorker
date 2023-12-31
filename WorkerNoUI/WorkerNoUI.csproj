@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-WorkerNoUI-c43330be-46bf-4ea0-912b-a70eb18ab6f0</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Worker\MessageListener.cs" Link="MessageListener.cs" />
+    <Compile Include="..\Worker\WorkerService.cs" Link="WorkerService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="Aspire.Azure.Messaging.ServiceBus" Version="8.0.0-preview.2.23618.4" />
+	<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\WebQWorker.ServiceDefaults\WebQWorker.ServiceDefaults.csproj" />
+  </ItemGroup>
+</Project>
