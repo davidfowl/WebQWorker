@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<PackageReference Include="Aspire.Azure.Messaging.ServiceBus" Version="8.0.0-preview.2.23618.4" />
+	<PackageReference Include="Aspire.Azure.Messaging.ServiceBus" Version="8.0.0-preview.3.24076.8" />
 	<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
   </ItemGroup>
 
