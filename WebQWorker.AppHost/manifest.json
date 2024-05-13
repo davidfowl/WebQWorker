@@ -1,10 +1,13 @@
 {
   "resources": {
     "bus": {
-      "type": "azure.servicebus.v0",
-      "queues": [
-        "myqueue"
-      ]
+      "type": "azure.bicep.v0",
+      "connectionString": "{bus.outputs.serviceBusEndpoint}",
+      "path": "bus.module.bicep",
+      "params": {
+        "principalId": "",
+        "principalType": ""
+      }
     },
     "web": {
       "type": "project.v0",
@@ -12,6 +15,8 @@
       "env": {
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
+        "ASPNETCORE_FORWARDEDHEADERS_ENABLED": "true",
         "queueName": "myqueue",
         "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE": "true",
         "Aspire__Azure__Messaging__ServiceBus__Tracing": "true",
@@ -32,26 +37,15 @@
     },
     "worker": {
       "type": "project.v0",
-      "path": "../Worker/Worker.csproj",
+      "path": "../WorkerNoUI/WorkerNoUI.csproj",
       "env": {
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EXCEPTION_LOG_ATTRIBUTES": "true",
         "OTEL_DOTNET_EXPERIMENTAL_OTLP_EMIT_EVENT_LOG_ATTRIBUTES": "true",
+        "OTEL_DOTNET_EXPERIMENTAL_OTLP_RETRY": "in_memory",
         "queueName": "myqueue",
         "AZURE_EXPERIMENTAL_ENABLE_ACTIVITY_SOURCE": "true",
         "Aspire__Azure__Messaging__ServiceBus__Tracing": "true",
         "ConnectionStrings__bus": "{bus.connectionString}"
-      },
-      "bindings": {
-        "http": {
-          "scheme": "http",
-          "protocol": "tcp",
-          "transport": "http"
-        },
-        "https": {
-          "scheme": "https",
-          "protocol": "tcp",
-          "transport": "http"
-        }
       }
     }
   }
