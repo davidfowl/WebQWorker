@@ -6,7 +6,7 @@ The [_Web_](/Web/) project exposes a `/message` API that will publish to a servi
 The [_Worker_](/Worker/) project exposes a Blazor interactive server component to show messages being received from the service bus queue in real time.
 The application requires a real Azure Service Bus instance (there are no emulators). 
 
-The sample uses [Aspire.Hosting.Azure.Provisoning](#) to spin up a real Azure Service Bus instance in the specified subscription and location (see [below](#requirements) for more details).
+The sample uses [Aspire.Hosting.Azure.ServiceBus](https://www.nuget.org/packages/Aspire.Hosting.Azure.ServiceBus) to spin up a real Azure Service Bus instance in the specified subscription and location (see [below](#requirements) for more details).
 
 ## Requirements
 
