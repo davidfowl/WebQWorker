@@ -2,7 +2,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
 
-builder.AddAzureServiceBus("bus");
+builder.AddAzureServiceBusClient("bus");
 builder.Services.AddSingleton<MessageSender>();
 
 var app = builder.Build();

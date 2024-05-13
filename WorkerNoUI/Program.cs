@@ -4,7 +4,7 @@ using Worker;
 
 var builder = Host.CreateApplicationBuilder(args);
 
-builder.AddAzureServiceBus("bus");
+builder.AddAzureServiceBusClient("bus");
 
 builder.AddServiceDefaults();
 

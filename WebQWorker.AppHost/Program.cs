@@ -4,7 +4,7 @@ builder.AddAzureProvisioning();
 
 var queueName = "myqueue";
 
-var bus = builder.AddAzureServiceBus("bus", queueNames: [queueName]);
+var bus = builder.AddAzureServiceBus("bus").AddQueue(queueName);
 
 builder.AddProject<Projects.Web>("web")
     .WithEnvironment("queueName", queueName)

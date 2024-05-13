@@ -2,7 +2,7 @@ using Worker;
 
 var builder = WebApplication.CreateSlimBuilder(args);
 
-builder.AddAzureServiceBus("bus");
+builder.AddAzureServiceBusClient("bus");
 
 builder.AddServiceDefaults();
 
