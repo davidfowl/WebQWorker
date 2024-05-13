@@ -1,4 +1,5 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34303.136
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -10,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "Web\Web.csproj", "{3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Worker", "Worker\Worker.csproj", "{68FE3E43-CDAE-4129-B080-4A7AA28F4016}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkerNoUI", "WorkerNoUI\WorkerNoUI.csproj", "{3468F200-4050-4946-96C6-B1BCECD2FA15}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkerNoUI", "WorkerNoUI\WorkerNoUI.csproj", "{3468F200-4050-4946-96C6-B1BCECD2FA15}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{50234057-74C1-46F0-BA37-D503E900832F}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
